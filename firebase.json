@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "/home/runner/work/contact-list/contact-list/dist/contact-list-app",
+    "public": "dist/contact-list-app",
     "ignore": [
       "firebase.json",
       "**/.*",
