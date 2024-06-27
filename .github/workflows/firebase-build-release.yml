@@ -1,0 +1,55 @@
+name: Deploy to Firebase Hosting
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'  # Specify the Node.js version
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Install Angular CLI
+      run: npm install -g @angular/cli
+
+    - name: Build project
+      run: ng build --prod  # Adjust this if your build command is different
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main'
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install Firebase CLI
+      run: npm install -g firebase-tools
+
+    - name: Deploy to Firebase Hosting (dev)
+      if: github.ref == 'refs/heads/dev'
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN_PROJECT_1 }}
+      run: |
+        firebase use --add fir-app-86d37
+        firebase deploy --only hosting
+
+    - name: Deploy to Firebase Hosting (Prod)
+      if: github.ref == 'refs/heads/main'
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN_PROJECT_2 }}
+      run: |
+        firebase use --add fir-prod-3b516
+        firebase deploy --only hosting
