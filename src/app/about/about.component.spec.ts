@@ -33,4 +33,11 @@ describe('AboutComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('h1')?.textContent).toContain('About');
   });
+
+  it('should render description', () => {
+    const fixture = TestBed.createComponent(AboutComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('p')?.textContent).toContain('This is the about page.');
+  });
 });
