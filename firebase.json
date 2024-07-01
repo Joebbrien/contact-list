@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/contact-list-app",
+    "public": "dist",
     "ignore": [
       "firebase.json",
       "**/.*",
